@@ -1,5 +1,6 @@
 'use client';
 import PrimaryInput from '@/components/primary_input'
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
@@ -8,27 +9,30 @@ const LoginAuthority = () => {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     const router = useRouter();
-    const handleClick = () =>{
-        if(!id || id === '' || id.trim() === '')
-        {
-            toast.error('ID is required',{position : 'top-right'});
+    const handleClick = async () => {
+        if (!id || id.trim() === '') {
+            toast.error('ID is required', { position: 'top-right' });
             return;
         }
-        if(!password || password === '' || password.trim() === '')
-        {
-            toast.error('Password is required',{position : 'top-right'});
+        if (!password || password.trim() === '') {
+            toast.error('Password is required', { position: 'top-right' });
             return;
         }
-        if(id === 'admin1' && password === '12345678')
-        {
-            localStorage.setItem('authorised', 'true');
+    
+        const response = await signIn('credentials', {
+            email: id,
+            password: password,
+            redirect: false,
+        });
+    
+        if (response?.error) {
+            toast.error('Invalid credentials!', { position: 'top-right' });
+        } else if (response?.ok) {
+            toast.success('Login successful!', { position: 'top-right' });
             router.replace('/authorise');
         }
-        else
-        {
-            toast.error('Invalid Credentials',{position : 'top-right'});
-        }
-    }
+    };
+   
   return (
     <div className='flex items-center flex-col gap-14'>
     <h1 className='text-purple-200 font-extrabold text-center mt-16 text-4xl'>Login using your credentials!</h1>
