@@ -2,11 +2,13 @@
 import PrimaryInput from '@/components/primary_input';
 import SubmitButton from '@/components/submit_button';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 
 const AuthoriseVoter = () => {
     const [name, setName] = useState('');
+    const router = useRouter();
     async function registerVoter() {
         if(!name || name === '' || name.trim() === '')
         {
@@ -21,11 +23,17 @@ const AuthoriseVoter = () => {
             toast.error('Failed to authorise voter',{position : 'top-right'});
         }
     };
+  
+
+    if(!localStorage.getItem('authorised') || localStorage.getItem('authorised') ===null || localStorage.getItem('authorised') === 'false')
+    {
+       router.push('/login');
+    }
    
   return (
     <div className='flex flex-col items-center gap-4 mt-16'>
       <h1 className='text-purple-200 font-extrabold text-center text-4xl mb-11'>Register your Voter!</h1>
-      <PrimaryInput setChange={setName} labeltext={'Enter Voter\'s name'} value={name}></PrimaryInput>
+      <PrimaryInput setChange={setName} labeltext={'Enter Voter\'s name'} value={name} placeholder='John Doe'></PrimaryInput>
       <SubmitButton text='Authorise' onClick={registerVoter}></SubmitButton>
     </div>
   )

@@ -25,7 +25,7 @@ const RegisterUser = () => {
   return (
     <div className='flex flex-col items-center gap-4 mt-16'>
       <h1 className='text-purple-200 font-extrabold text-center text-4xl mb-11'>Register your Voter!</h1>
-      <PrimaryInput setChange={setName} labeltext={'Enter Voter\'s name'} value={name}></PrimaryInput>
+      <PrimaryInput placeholder='John Doe' setChange={setName} labeltext={'Enter Voter\'s name'} value={name}></PrimaryInput>
       <SubmitButton text='Submit' onClick={registerVoter}></SubmitButton>
     </div>
   )
