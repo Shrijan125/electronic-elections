@@ -27,6 +27,8 @@ const TallyVote = () => {
   }, []);
 
   return (
+    <div className='flex flex-col items-center gap-4 mt-16'>
+    <h1 className='text-purple-200 font-extrabold text-center text-4xl mb-11'>Tally your Votes!</h1>
     <div className="w-[700px] h-[600px]">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
@@ -42,12 +44,13 @@ const TallyVote = () => {
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
-          <YAxis />
+          <YAxis domain={[0, 100]} />
           <Tooltip />
           <Legend />
           <Bar dataKey="count" fill="#6D11AF" activeBar={<Rectangle fill="#4e0089" stroke="purple" />} />
         </BarChart>
       </ResponsiveContainer>
+    </div>
     </div>
   );
 };
