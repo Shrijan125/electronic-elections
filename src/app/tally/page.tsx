@@ -9,7 +9,7 @@ const TallyVote = () => {
   useEffect(() => {
     const fetchVoteData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/tallyvote');
+        const response = await axios.get(process.env.NEXT_PUBLIC_API_URL+'/tallyvote');
         const { totalYesVotes, totalNoVotes } = response.data;
 
         const formattedData = [
